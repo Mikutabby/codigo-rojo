@@ -449,6 +449,8 @@ h1.glitch{
 .sp-amarillo{ background:#f9a825; color:#f9a825; }
 .simon-status{ text-align:center; margin-top:16px; font-size:12.5px; letter-spacing:.12em; color:var(--dim); min-height:20px; }
 .simon-status.play{ color:var(--amber); animation:pulse .8s infinite; }
+.simon-status.ok{ color:var(--green); text-shadow:0 0 8px rgba(74,246,38,.5); animation:none; }
+.simon-status.bad{ color:var(--red); text-shadow:0 0 8px rgba(255,42,42,.5); animation:none; }
 
 /* Password */
 .password-slots{ display:flex; gap:9px; justify-content:center; margin-bottom:18px; }

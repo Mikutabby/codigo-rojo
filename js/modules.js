@@ -15,6 +15,10 @@ const shuffle = (arr) => {
   return a;
 };
 
+/* instancia activa de Simon: los timers de un montaje viejo (overlay
+   cerrado y reabierto) se descartan y no suenan ni tocan la UI */
+let simonInstance = 0;
+
 /* ── Columnas fijas del teclado (deben coincidir con el manual) ── */
 const KEYPAD_COLUMNS = [
   ["♠", "★", "☾", "⚙"],
@@ -446,42 +450,53 @@ const ModuleDefs = {
       let accepting = false;
       let done = false;
 
-      const flash = (color, delay, dur = 420) =>
-        new Promise((res) => {
-          setTimeout(() => {
-            pads[color].classList.add("lit");
-            Sfx.beep();
-            setTimeout(() => {
-              pads[color].classList.remove("lit");
-              res();
-            }, dur);
-          }, delay);
-        });
+      /* instancia viva: callbacks de montajes anteriores se ignoran */
+      const inst = ++simonInstance;
+      const alive = () => inst === simonInstance;
+
+      /* la ronda 1 solo se siembra si no existe: reabrir el módulo
+         (p. ej. para mirar el manual) conserva el progreso */
+      if (data.seq.length === 0) {
+        data.seq = [pick(COLORS), pick(COLORS), pick(COLORS)];
+        data.round = 0;
+      }
 
       const playSequence = async () => {
         accepting = false;
         inputIdx = 0;
+        status.className = "simon-status play";
         status.textContent = `RONDA ${data.round + 1}/3 — OBSERVANDO...`;
-        status.classList.add("play");
-        let t = 500;
-        for (const c of data.seq) {
-          await flash(c, t);
-          t += 620;
-        }
-        setTimeout(() => {
-          if (done) return;
-          accepting = true;
-          status.textContent = `RONDA ${data.round + 1}/3 — TOCÁ (mapeado)`;
-          status.classList.remove("play");
-        }, 300);
+        const STEP = 620, DUR = 420;
+        /* timing ABSOLUTO: cada flash se programa desde ahora (500 + i*620),
+           no desde que terminó el anterior — antes los intervalos crecían
+           +620ms por paso y la ronda 3 tardaba ~20 segundos */
+        await Promise.all(
+          data.seq.map((c, i) =>
+            new Promise((res) => {
+              setTimeout(() => {
+                if (!alive() || done) return res();
+                pads[c].classList.add("lit");
+                Sfx.beep();
+                setTimeout(() => {
+                  if (alive()) pads[c].classList.remove("lit");
+                  res();
+                }, DUR);
+              }, 500 + i * STEP);
+            })
+          )
+        );
+        if (!alive() || done) return;
+        accepting = true;
+        status.textContent = `RONDA ${data.round + 1}/3 — TOCÁ (mapeado)`;
+        status.classList.remove("play");
       };
 
       const nextRound = () => {
         data.round++;
         if (data.round >= 3) {
           done = true;
+          status.className = "simon-status ok";
           status.textContent = "✓ SECUENCIA COMPLETA — MÓDULO DESACTIVADO";
-          status.className = "mod-status ok";
           Sfx.success();
           setTimeout(() => ctx.onSolved(), 450);
           return;
@@ -506,13 +521,15 @@ const ModuleDefs = {
           } else {
             done = true;
             accepting = false;
+            status.className = "simon-status bad";
             status.textContent = "✗ COLOR EQUIVOCADO — volvés a la ronda 1";
-            status.className = "mod-status bad";
             Sfx.error();
             ctx.onStrike();
+            /* datos reiniciados YA: ronda 1 = 3 flashes, igual que el arranque */
+            data.round = 0;
+            data.seq = [pick(COLORS), pick(COLORS), pick(COLORS)];
             setTimeout(() => {
-              data.round = 0;
-              data.seq = [pick(COLORS), pick(COLORS)];
+              if (!alive()) return;
               done = false;
               playSequence();
             }, 1200);
@@ -520,9 +537,6 @@ const ModuleDefs = {
         };
       });
 
-      /* arranque: ronda 1 = 3 flashes */
-      data.seq = [pick(COLORS), pick(COLORS), pick(COLORS)];
-      data.round = 0;
       playSequence();
     },
   },
