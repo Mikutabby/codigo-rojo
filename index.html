@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>CÓDIGO ROJO — Desactiva la bomba</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Overlay scanlines CRT -->
+<div class="scanlines" aria-hidden="true"></div>
+<div id="fx-flash" aria-hidden="true"></div>
+
+<!-- ══════════════════ PANTALLA: INTRO ══════════════════ -->
+<section id="screen-intro" class="screen active">
+  <div class="intro-box">
+    <div class="badge">PROYECTO CLASIFICADO · NIVEL 5</div>
+    <h1 class="glitch" data-text="CÓDIGO ROJO">CÓDIGO ROJO</h1>
+    <p class="tagline">Una bomba. Un manual. Un cronómetro.<br><span class="amber">Desactivala antes de que el tiempo se acabe.</span></p>
+
+    <div class="briefing">
+      <h3>» INSTRUCCIONES DE CAMPO</h3>
+      <ul>
+        <li>La bomba tiene <b>módulos</b>. Resolvé <b>todos</b> para desactivarla.</li>
+        <li>Consultá el <b>MANUAL</b>: cada módulo tiene sus reglas ahí.</li>
+        <li><b>3 errores</b> y la bomba explota. Ojo con lo que apretás.</li>
+        <li>Mirá el <b>número de serie</b> y las <b>baterías</b>: muchas reglas los usan.</li>
+      </ul>
+    </div>
+
+    <div class="difficulty-select">
+      <button class="diff-btn" data-diff="facil">
+        <span class="d-name">FÁCIL</span>
+        <span class="d-info">3 módulos · 5:00</span>
+      </button>
+      <button class="diff-btn" data-diff="normal">
+        <span class="d-name">NORMAL</span>
+        <span class="d-info">5 módulos · 5:30</span>
+      </button>
+      <button class="diff-btn" data-diff="experto">
+        <span class="d-name">EXPERTO</span>
+        <span class="d-info">7 módulos · 6:30</span>
+      </button>
+    </div>
+
+    <div id="records"></div>
+    <p class="hint">Subí el volumen — los clicks y la alarma son parte de la experiencia.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ PANTALLA: JUEGO ══════════════════ -->
+<section id="screen-game" class="screen">
+  <header class="hud">
+    <div class="hud-strikes" id="strikes" title="Errores">
+      <span class="strike-box" data-i="0">✗</span>
+      <span class="strike-box" data-i="1">✗</span>
+      <span class="strike-box" data-i="2">✗</span>
+    </div>
+    <div class="hud-timer" id="timer">5:00</div>
+    <div class="hud-right">
+      <button class="hud-btn" id="btn-sound" title="Sonido"></button>
+      <button class="hud-btn" id="btn-manual" title="Manual"></button>
+    </div>
+  </header>
+
+  <!-- Carcasa de la bomba -->
+  <div class="bomb-chassis">
+    <div class="chassis-label">
+      <span>SERIE: <b id="serial-display">--</b></span>
+      <span class="batts"><span id="batt-icon"></span> <b id="batt-display">0</b></span>
+    </div>
+    <div class="modules-grid" id="modules-grid"><!-- módulos inyectados por JS --></div>
+    <div class="chassis-footer">
+      <span id="progress-label">MÓDULOS: 0/0</span>
+      <span class="armed led-on" id="arm-label">● ARMADA</span>
+    </div>
+  </div>
+
+  <!-- Panel lateral del MANUAL -->
+  <aside id="manual-panel" class="manual-panel closed" aria-label="Manual del desarmador">
+    <div class="manual-head">
+      <h2><span id="manual-icon"></span> MANUAL DEL DESARMADOR</h2>
+      <button id="manual-close">✕</button>
+    </div>
+    <input type="text" id="manual-search" placeholder="Buscar módulo..." autocomplete="off">
+    <nav id="manual-nav"></nav>
+    <div id="manual-content"></div>
+    <footer class="manual-foot">Manual v3.1 · Edición interna · Páginas 2-14</footer>
+  </aside>
+
+  <!-- Modal de módulo activo -->
+  <div id="module-overlay" class="module-overlay closed">
+    <div class="module-window">
+      <div class="module-titlebar">
+        <span id="module-title">MÓDULO</span>
+        <div class="module-titlebar-btns">
+          <button id="module-help" title="Ver reglas"></button>
+          <button id="module-close" title="Cerrar">✕</button>
+        </div>
+      </div>
+      <div id="module-body" class="module-body"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ PANTALLA: RESULTADO ══════════════════ -->
+<section id="screen-result" class="screen">
+  <div class="result-box">
+    <h1 id="result-title">—</h1>
+    <p id="result-sub">—</p>
+    <div class="result-stats" id="result-stats"></div>
+    <div class="result-actions">
+      <button id="btn-retry" class="big-btn"></button>
+      <button id="btn-menu" class="big-btn ghost"></button>
+    </div>
+  </div>
+</section>
+
+<script src="js/icons.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/manual.js"></script>
+<script src="js/modules.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
