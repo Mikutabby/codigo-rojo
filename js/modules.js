@@ -75,6 +75,66 @@ const RIDDLES = [
     q: "Lo alargas sobre el piso y se hace más corto. ¿Qué es?",
     o: ["Una soga", "Tu sombra", "El día", "Una espera"], a: 1,
   },
+  {
+    q: "Si me sigues, te quedás sin nada. Si huís de mí, me acerco. ¿Qué soy?",
+    o: ["La muerte", "Tu sombra", "El ayer", "El miedo"], a: 1,
+  },
+  {
+    q: "Tengo agujas, pero no te coso. Marco algo que no se recupera. ¿Qué soy?",
+    o: ["Un reloj", "Una brújula", "Una máquina de coser", "Un peine"], a: 0,
+  },
+  {
+    q: "Cuanto más quitas de mí, más grande me hago. ¿Qué soy?",
+    o: ["Un pozo", "Una deuda", "Un agujero", "Una caja"], a: 2,
+  },
+  {
+    q: "Lo tengo largo, lo perdés y lo recuperás. Lo cortás y llora. ¿Qué es?",
+    o: ["Un cabello", "El tiempo", "Un río", "Una cuerda"], a: 3,
+  },
+  {
+    q: "Puede hacerse en un segundo, romperse en un milisegundo y olvidarse en un día. ¿Qué es?",
+    o: ["Una promesa", "Un cristal", "Un chiste", "Una moneda"], a: 0,
+  },
+  {
+    q: "Tiene páginas, pero no es un libro. Muestra ciudades que no existen. ¿Qué es?",
+    o: ["Un diario", "Un mapa", "Una revista", "Un cuaderno"], a: 1,
+  },
+  {
+    q: "Si me tiras al agua, desaparezco. ¿Qué soy?",
+    o: ["Una piedra", "La sombra", "El hielo", "El azúcar"], a: 3,
+  },
+  {
+    q: "Soy el principio de la eternidad, el final del tiempo y del espacio, y el principio de todo final. ¿Qué letra soy?",
+    o: ["La T", "La E", "La A", "La Z"], a: 1,
+  },
+  {
+    q: "Tiene cabeza y no piensa, tiene cola y no es animal. ¿Qué es?",
+    o: ["Una moneda", "Una cuchara", "Un clip", "Un pez"], a: 0,
+  },
+  {
+    q: "Vive sin cuerpo, ríe sin boca, sopla sin pulmones y grita sin cuerdas. ¿Qué es?",
+    o: ["Un fantasma", "El viento", "Un eco", "El fuego"], a: 1,
+  },
+  {
+    q: "Puedo correr, pero nunca camino. Tengo cama, pero nunca duermo. ¿Qué soy?",
+    o: ["Un caballo", "Un río", "El sol", "Un caracol"], a: 1,
+  },
+  {
+    q: "¿Qué pesa más: un kilo de pluma o un kilo de plomo?",
+    o: ["El plomo", "Las plumas", "Pesan lo mismo", "Depende del aire"], a: 2,
+  },
+  {
+    q: "Tengo ciudades, pero no casas. Bosques, pero no árboles. Agua, pero no peces. Viajo, pero no camino. ¿Qué soy?",
+    o: ["Un libro", "Un sueño", "Un mapa", "La memoria"], a: 2,
+  },
+  {
+    q: "Lo parten y no llora; lo comen y no saben a nada. ¿Qué es?",
+    o: ["El aire", "El silencio", "La sombra", "La niebla"], a: 1,
+  },
+  {
+    q: "Tengo dientes por fuera y no muerdo. ¿Qué soy?",
+    o: ["Un perro", "Un peine", "Una cerradura", "Un sierra"], a: 1,
+  },
 ];
 
 /* ── Deducción lógica ── */
@@ -94,6 +154,38 @@ const LOGIC = [
   {
     q: "Hay tres lugares: la colina, el faro y el río. PISTAS: 1) El tesoro NO está en la colina. 2) El tesoro está en el faro. 3) El tesoro NO está en el faro. Solo UNA pista es verdadera. ¿Dónde está el tesoro?",
     o: ["En la colina", "En el faro", "En el río", "No se puede saber"], a: 0,
+  },
+  {
+    q: "Cuatro puertas: roja, azul, verde, amarilla. PISTAS: 1) La salida NO es la roja. 2) La azul SÍ es la salida. 3) La verde SÍ es la salida. Solo UNA pista es verdadera. ¿Por dónde salís?",
+    o: ["Por la roja", "Por la azul", "Por la verde", "Por la amarilla"], a: 3,
+  },
+  {
+    q: "Tres sospechosos: Ana, Bruno y Carla. PISTAS: 1) Si Ana es culpable, Bruno también lo es. 2) Bruno y Carla no pueden ser culpables a la vez. 3) Ana ES culpable. ¿Quiénes son culpables?",
+    o: ["Solo Ana", "Ana y Bruno", "Bruno y Carla", "Solo Carla"], a: 1,
+  },
+  {
+    q: "En una isla hay dos tribus: los siempre-verdaderos y los siempre-falsos. Encontrás una puerta y un guardia que dice: «La otra puerta es peligrosa». ¿Qué puerta es segura?",
+    o: ["La que el guardia señala", "La puerta del guardia", "No se puede saber", "Ninguna"], a: 1,
+  },
+  {
+    q: "Cinco casas de colores. PISTAS: 1) El rojo está a la izquierda del azul. 2) El verde está en el extremo derecho. 3) El amarillo está al lado del verde. 4) El blanco NO está en el extremo izquierdo. ¿Cuál es el orden de izquierda a derecha?",
+    o: ["Blanco, Rojo, Azul, Amarillo, Verde", "Rojo, Azul, Blanco, Verde, Amarillo", "Rojo, Azul, Amarillo, Verde, Blanco", "No se puede saber"], a: 0,
+  },
+  {
+    q: "Un reloj atrasa 15 minutos cada hora. Si ahora marca 3:00 exacto, ¿qué hora real será cuando el reloj marque 6:00?",
+    o: ["6:00", "6:45", "7:00", "7:15"], a: 2,
+  },
+  {
+    q: "Una barra de chocolate tiene 8 segmentos. ¿Cuántos cortes necesitás para separar todos los segmentos?",
+    o: ["7 cortes", "8 cortes", "4 cortes", "16 cortes"], a: 0,
+  },
+  {
+    q: "Tres cajas: una con oro, otra con plata, una vacía. Cajas con inscripciones, TODAS falsas: CAJA 1: «Aquí hay oro». CAJA 2: «Aquí hay plata». CAJA 3: «Aquí hay oro o plata». ¿Dónde está el oro?",
+    o: ["En la caja 1", "En la caja 2", "En la caja 3", "No se puede saber"], a: 1,
+  },
+  {
+    q: "Un caballero dice: «Miento». ¿Es verdad o mentira lo que dice?",
+    o: ["Es verdad", "Es mentira", "Paradoja — no se puede saber", "Depende del día"], a: 2,
   },
 ];
 
@@ -313,7 +405,7 @@ const ModuleDefs = {
           case "rojo":     return sec % 2 === 0;
           case "azul":     return sec % 10 === 4;
           case "amarillo": return sec % 10 === 7;
-          case "blanca":
+          case "blanco":
           default:         return sec % 10 === 0;
         }
       };
